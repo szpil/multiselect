@@ -12,13 +12,26 @@ const App = () => {
     const inputRef = useRef(null);
     
     const onInputChange = (event) => {
+        const searchText = event.target.value;
+        setIsMenuOpen(true);
+        setSearchedOptions(options.filter(option => option.includes(searchText)));
     }
+    
 
     const removeOption = (option) => {
+        setSelectedOptions(selectedOptions.filter(selectedOption => selectedOption !== option));
     }
 
     const onClickOption = (option) => {
+        if (selectedOptions.includes(option)) {
+            setSelectedOptions(selectedOptions.filter(selectedOption => selectedOption !== option));
+        } else {
+            setSelectedOptions([...selectedOptions, option]);
+        }
+        inputRef.current.value = '';
+        setIsMenuOpen(false);
     }
+    
 
     return (
         <div className='wrapper' ref={wrapperRef}>
